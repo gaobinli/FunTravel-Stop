@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shopping.mapper.ReportMapper">
+
+    <select id="selectOrderNumber" resultType="com.shopping.domain.dto.res.ReportResDTO">
+        select
+          month(create_time) as monthValue,
+          count(*) numberValue
+        from sku_order
+        where create_time >= #{startTime}
+        group by month(create_time)
+    </select>
+    <select id="selectOrderSale" resultType="com.shopping.domain.dto.res.ReportResDTO">
+        select
+            month(create_time) as monthValue,
+            sum(price) numberValue
+        from order_detail
+        where create_time >= #{startTime}
+        group by month(create_time)
+    </select>
+</mapper>
